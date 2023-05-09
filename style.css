@@ -1,0 +1,135 @@
+body{
+
+  background-color: #1F2937;
+
+}
+
+
+.hcenterwrap{
+
+  text-align:center;
+
+}
+
+
+.w50{
+
+  width:50%;
+
+}
+
+.w100{
+
+  width:100%;
+
+}
+
+#questmenu {
+  margin: 20px auto; 
+  width: 500px; 
+  height: 200px;
+  border: 1px solid lightgray;
+
+  float:left;
+}
+
+#minemenu {
+  margin: 20px auto; 
+  width: 500px; 
+  height: 200px;
+  border: 1px solid lightgray;
+
+  float:left;
+}
+
+#oremenu {
+  margin: 20px auto; 
+  width: 500px; 
+  height: 200px;
+  border: 1px solid lightgray;
+}
+
+
+
+#minebackarrow{
+
+  cursor:pointer;
+  visibility: hidden;
+
+}
+
+#mineforwardarrow{
+
+  cursor:pointer;
+
+}
+
+#minetophalf, #minebottomhalf{
+
+height:50%;
+
+}
+
+#minebottomhalf{
+
+  text-align: left;
+
+
+}
+
+
+
+#row1{
+
+  display:inline-block;
+
+}
+
+
+.start-quest-btn{
+
+  width: auto;
+
+
+}
+
+#questlist{
+
+  list-style-type:none;
+
+
+}
+
+.ore-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size:1.5rem;
+  line-height: 0.8;
+  margin-top:10px;
+
+}
+
+#oretophalf{
+
+    font-size:1.5rem;
+    line-height: 0.8;
+    margin-top:10px;
+
+    height:20%;
+
+}
+
+#orebottomhalf{
+
+    height:75%;
+
+}
+
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
