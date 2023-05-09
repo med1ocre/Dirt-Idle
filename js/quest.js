@@ -7,4 +7,13 @@ const quests = [
     started: false,
     completed: false,
   },
+  {
+    name: "Stone Age",
+    flag: { Dirt: 10 },
+    requirements: { Stone: 10 },
+    rewards: { cash: 50 },
+    started: false,
+    completed: false,
+  },
 ];
+

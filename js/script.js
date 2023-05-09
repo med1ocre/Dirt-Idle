@@ -1,3 +1,5 @@
+setInterval(function(){displayQuests();},1000)
+
 //Function for going left/right between the ores
 function changeOre(direction) {
   const currentIndex = oreData.findIndex(ore => ore.name === currentOre);
@@ -25,7 +27,17 @@ function changeOre(direction) {
   }
 }
 
+function updatePickaxeUI(){
 
+  let pickaxeDataObject = pickaxeData.find(pickaxe => pickaxe.name === currentPickaxe);
+
+  // get the tier of the pickaxe based on its weight value
+  let pickaxeTier = pickaxeDataObject ? pickaxeDataObject.weight : 0;
+
+  // update the HTML element to display the modified string with the pickaxe tier
+  currentPickaxeDisplay.innerHTML = currentPickaxe.replace("Pickaxe", "") + `(Tier ${pickaxeTier})`;
+
+}
 
 //Temp variable to tell whether or not we are mining
 let currentResource = '';
@@ -92,4 +104,66 @@ function showInventory() {
   document.getElementById('orebottomhalf').innerHTML = inventoryList;
 }
 
+
+//QUEST STUFF!
+function displayQuests() {
+  const questBottomHalf = document.getElementById("questbottomhalf");
+  questBottomHalf.innerHTML = "";
+
+  quests.forEach((quest) => {
+    if (!quest.completed) {
+      const { name, flag, requirements, rewards, started } = quest;
+
+      if (!started && Object.entries(flag).some(([key, value]) => Inventory[key] >= value)) {
+        const questText = `${name} | ${Object.entries(requirements).map(([key, value]) => `${value} ${key}`).join(", ")} | ${Object.entries(rewards).map(([key, value]) => `${value} ${key}`).join(", ")}&nbsp;`;
+        const questElement = document.createElement("p");
+        questElement.innerHTML = questText;
+        const questButton = document.createElement("button");
+        questButton.innerText = "Start";
+        questButton.classList.add("btn", "btn-secondary");
+        questButton.style.padding = "0 10px";
+        questButton.style.width = "auto";
+        questButton.style.fontSize = "14px";
+        questButton.addEventListener("click", () => {
+          quest.started = true;
+          questButton.innerText = "In Progress";
+          questButton.classList.remove("btn-secondary");
+          questButton.classList.add("btn-warning");
+        });
+        questElement.appendChild(questButton);
+        questBottomHalf.appendChild(questElement);
+      } else if (started) {
+        const questText = `${name} | ${Object.entries(requirements).map(([key, value]) => `${value} ${key}`).join(", ")} | ${Object.entries(rewards).map(([key, value]) => `${value} ${key}`).join(", ")}&nbsp;`;
+        const questElement = document.createElement("p");
+        questElement.innerHTML = questText;
+        const questButton = document.createElement("button");
+        if (Object.entries(Inventory).every(([key, value]) => value >= quest.requirements[key])) {
+
+          questButton.innerText = "Turn In!";
+          questButton.classList.add("btn", "btn-success");
+        } else {
+          questButton.innerText = "In Progress";
+          questButton.classList.add("btn", "btn-warning");
+        }
+        questButton.style.padding = "0 10px";
+        questButton.style.width = "auto";
+        questButton.style.fontSize = "14px";
+        questButton.disabled = !Object.entries(Inventory).every(([key, value]) => value >= requirements[key]);
+        questElement.appendChild(questButton);
+        questBottomHalf.appendChild(questElement);
+      }
+    }
+  });
+}
+
+
+
+
+
+
+
+
+
+
 showInventory();
+updatePickaxeUI();

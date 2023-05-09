@@ -11,3 +11,5 @@ const pickaxeData = [
   { name: 'Iron Pickaxe', weight: 3 },
 ];
 
+
+let currentPickaxeDisplay = document.getElementById("currentpickaxe");
