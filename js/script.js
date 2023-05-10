@@ -84,25 +84,48 @@ function startMining() {
 
 
 function showInventory() {
-  // Create a lookup object for the oreData keyed by the ore name
-  const oreDataLookup = {};
-  for (const ore of oreData) {
-    oreDataLookup[ore.name] = ore;
-  }
-
   let inventoryList = '';
   let totalValue = 0;
 
-  for (const resource of minedResources) {
-    const value = resource.amount * oreDataLookup[resource.name].value;
-    inventoryList += `${resource.amount}x ${resource.name} ($${value})<br>`;
-    totalValue += value;
+  for (const [itemName, itemQuantity] of Object.entries(Inventory)) {
+    if (itemQuantity > 0) {
+      const itemData = oreData.find(item => item.name === itemName);
+      if (itemData) {
+        const value = (itemQuantity * itemData.value);
+        inventoryList += `${itemQuantity.toFixed(1)}x ${itemName} ($${value.toFixed(2)}) <button class="btn btn-sm btn-success sell-btn" data-ore="${itemName}">Sell All</button><br>`;
+        totalValue += parseFloat(value.toFixed(2));
+      } else if (itemName !== 'Cash') {
+        inventoryList += `${itemQuantity}x ${itemName}<br>`;
+      }
+    }
   }
 
-  inventoryList += `Total: $${totalValue}`;
+  inventoryList += `Total value: $${totalValue.toFixed(2)}`;
 
   document.getElementById('orebottomhalf').innerHTML = inventoryList;
+
+  const sellButtons = document.querySelectorAll('.sell-btn');
+  sellButtons.forEach(button => {
+    button.style.padding = '0 10px';
+    button.style.width = 'auto';
+    button.style.fontSize = '14px';
+    button.addEventListener('click', (event) => {
+      const itemName = event.target.getAttribute('data-ore');
+      const itemData = oreData.find(item => item.name === itemName);
+      const value = itemData.value;
+      if (Inventory[itemName] > 0) {
+        Inventory.Cash += Inventory[itemName] * value;
+        Inventory[itemName] = 0;
+      }
+      showInventory();
+    });
+  });
+
 }
+
+
+
+
 
 
 //QUEST STUFF!
@@ -111,50 +134,73 @@ function displayQuests() {
   questBottomHalf.innerHTML = "";
 
   quests.forEach((quest) => {
-    if (!quest.completed) {
-      const { name, flag, requirements, rewards, started } = quest;
+    if (!quest.completed && (quest.unlocked || Object.entries(quest.flag).some(([key, value]) => Inventory[key] >= value))) {
+      const { name, requirements, rewards, started } = quest;
 
-      if (!started && Object.entries(flag).some(([key, value]) => Inventory[key] >= value)) {
-        const questText = `${name} | ${Object.entries(requirements).map(([key, value]) => `${value} ${key}`).join(", ")} | ${Object.entries(rewards).map(([key, value]) => `${value} ${key}`).join(", ")}&nbsp;`;
-        const questElement = document.createElement("p");
-        questElement.innerHTML = questText;
-        const questButton = document.createElement("button");
+      const questText = `${name} | ${Object.entries(requirements).map(([key, value]) => `${value} ${key.replace('currentPickaxe', '')}`).join(", ")} | ${Object.entries(rewards).map(([key, value]) => `${value} ${key}`).join(", ")}&nbsp;`;
+
+      const questElement = document.createElement("p");
+      questElement.innerHTML = questText;
+      const questButton = document.createElement("button");
+
+      if (!quest.unlocked && Object.entries(quest.flag).every(([key, value]) => Inventory[key] >= value)) {
+        quest.unlocked = true;
+      }
+
+      if (!started) {
         questButton.innerText = "Start";
         questButton.classList.add("btn", "btn-secondary");
-        questButton.style.padding = "0 10px";
-        questButton.style.width = "auto";
-        questButton.style.fontSize = "14px";
         questButton.addEventListener("click", () => {
           quest.started = true;
           questButton.innerText = "In Progress";
           questButton.classList.remove("btn-secondary");
           questButton.classList.add("btn-warning");
         });
-        questElement.appendChild(questButton);
-        questBottomHalf.appendChild(questElement);
-      } else if (started) {
-        const questText = `${name} | ${Object.entries(requirements).map(([key, value]) => `${value} ${key}`).join(", ")} | ${Object.entries(rewards).map(([key, value]) => `${value} ${key}`).join(", ")}&nbsp;`;
-        const questElement = document.createElement("p");
-        questElement.innerHTML = questText;
-        const questButton = document.createElement("button");
-        if (Object.entries(Inventory).every(([key, value]) => value >= quest.requirements[key])) {
+      } else if (started && Object.entries(requirements).every(([key, value]) => Inventory[key] >= value)) {
+        questButton.innerText = "Turn In!";
+        questButton.disabled = false;
+        questButton.classList.add("btn", "btn-success");
+        questButton.addEventListener("click", () => {
+          Object.entries(requirements).every(([key, value]) => {
+            if (key === 'currentPickaxe') {
 
-          questButton.innerText = "Turn In!";
-          questButton.classList.add("btn", "btn-success");
-        } else {
-          questButton.innerText = "In Progress";
-          questButton.classList.add("btn", "btn-warning");
-        }
-        questButton.style.padding = "0 10px";
-        questButton.style.width = "auto";
-        questButton.style.fontSize = "14px";
-        questButton.disabled = !Object.entries(Inventory).every(([key, value]) => value >= requirements[key]);
-        questElement.appendChild(questButton);
-        questBottomHalf.appendChild(questElement);
+              return currentPickaxe === value;
+            } else {
+              return Inventory[key] >= value;
+            }
+          });
+          
+          Object.entries(requirements).forEach(([key, value]) => {
+            Inventory[key] -= value;
+          });
+          Object.entries(rewards).forEach(([key, value]) => {
+            Inventory[key] += value;
+          });
+          quest.completed = true;
+          const index = activeQuests.indexOf(quest);
+          if (index !== -1) {
+            activeQuests.splice(index, 1);
+          }
+          completedQuests.push(quest);
+          displayQuests();
+          showInventory();
+        });
+
+      } else if (started) {
+        questButton.innerText = "In Progress";
+        questButton.classList.add("btn", "btn-warning");
       }
+
+      questButton.style.padding = "0 10px";
+      questButton.style.width = "auto";
+      questButton.style.fontSize = "14px";
+
+      questElement.appendChild(questButton);
+      questBottomHalf.appendChild(questElement);
     }
   });
 }
+
 
 
 

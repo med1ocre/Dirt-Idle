@@ -55,7 +55,7 @@ body{
 
 }
 
-#upgrademenu {
+#workermenu {
   margin: 20px auto; 
   width: 500px; 
   height: 200px;
@@ -129,13 +129,31 @@ height:50%;
 
 }
 
-#upgradetophalf{
+#workertophalf{
 
     font-size:1.5rem;
     line-height: 0.8;
     margin-top:10px;
 
     height:20%;
+
+}
+
+#workerbottomlefthalf{
+
+    text-align: left;
+    width:60%;
+    float:left;
+
+
+}
+
+#workerbottomrighthalf{
+
+    text-align: center;
+    width:40%;
+    float:left;
+
 
 }
 
