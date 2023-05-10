@@ -92,7 +92,13 @@ function showInventory() {
       const itemData = oreData.find(item => item.name === itemName);
       if (itemData) {
         const value = (itemQuantity * itemData.value);
-        inventoryList += `${itemQuantity.toFixed(1)}x ${itemName} ($${value.toFixed(2)}) <button class="btn btn-sm btn-success sell-btn" data-ore="${itemName}">Sell All</button><br>`;
+        inventoryList += `<div style="display:flex;align-items:center;justify-content:space-between;">`;
+        inventoryList += `<div>${itemQuantity.toFixed(1)}x ${itemName} ($${value.toFixed(2)})</div>`;
+        inventoryList += `<div style="display:flex;align-items:center;">`;
+        inventoryList += `<input type="number" min="1" max="${itemQuantity}" step="1" value="${itemQuantity}" id="${itemName}-sell-qty" style="width: 50px; font-size:11px;margin-right:5px">`;
+        inventoryList += `<button class="btn btn-sm btn-warning sell-btn" data-ore="${itemName}" style="margin-right:5px">Sell</button>`;
+        inventoryList += `<button class="btn btn-sm btn-danger sell-all-btn" data-ore="${itemName}">Sell All</button>`;
+        inventoryList += `</div></div>`;
         totalValue += parseFloat(value.toFixed(2));
       } else if (itemName !== 'Cash') {
         inventoryList += `${itemQuantity}x ${itemName}<br>`;
@@ -113,6 +119,25 @@ function showInventory() {
       const itemName = event.target.getAttribute('data-ore');
       const itemData = oreData.find(item => item.name === itemName);
       const value = itemData.value;
+      const qtyInput = document.getElementById(`${itemName}-sell-qty`);
+      const qty = qtyInput.value;
+      if (Inventory[itemName] >= qty) {
+        Inventory.Cash += qty * value;
+        Inventory[itemName] -= qty;
+      }
+      showInventory();
+    });
+  });
+
+  const sellAllButtons = document.querySelectorAll('.sell-all-btn');
+  sellAllButtons.forEach(button => {
+    button.style.padding = '0 10px';
+    button.style.width = 'auto';
+    button.style.fontSize = '14px';
+    button.addEventListener('click', (event) => {
+      const itemName = event.target.getAttribute('data-ore');
+      const itemData = oreData.find(item => item.name === itemName);
+      const value = itemData.value;
       if (Inventory[itemName] > 0) {
         Inventory.Cash += Inventory[itemName] * value;
         Inventory[itemName] = 0;
@@ -120,8 +145,9 @@ function showInventory() {
       showInventory();
     });
   });
-
 }
+
+
 
 
 
@@ -210,6 +236,6 @@ function displayQuests() {
 
 
 
-
+displayQuests();
 showInventory();
 updatePickaxeUI();
