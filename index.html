@@ -29,9 +29,9 @@
 	</nav>
 
 	<div id="homecontent" class="hcenterwrap">
-		<div id="row1" class="row">
+		<div id="row1" class="row justify-content-center">
 
-			<div id="questmenu">
+			<div id="questmenu" class="mx-2">
 	  			<div id="questtophalf">
 	  				<span>Quest</span>
 	  				<hr>
@@ -42,7 +42,7 @@
 	  			</div>
 			</div>
 
-			<div id="minemenu">	
+			<div id="minemenu" class="mx-2">	
 	  			<div id="minetophalf">
 			  		<div class="ore-navigation">
 					   <span id="minebackarrow" class="prevent-select" onclick="changeOre('backward')">‹</span>
@@ -64,29 +64,38 @@
 	      		</div>
 			</div>
 
-			<div id="workermenu">
+			<div id="workermenu" class="mx-2">
 	  			<div id="workertophalf">
 	  				<span>Workers</span>
 	  				<hr>
 	  			</div>
 
-	  			<div id="workerbottomlefthalf">
+	  			<div id="workerbottomhalf">
 	  				<p>
-	  					<span id="dirtminercount">0</span>|10 Dirt Miner (<span id="dirtmineroutput">0.5</span>/s) 
-            			<button id="buydirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;">Buy ($<span id="dirtminerprice">10</span>)</button>
-	  				</p>
-	  			</div>
-	  			<div id="upgradebottomrighthalf">
-	  				<p>
-	  					
+	  					<span id="dirtminercount">0</span>|<span id="dirtminercap">10</span> Dirt Miner (<span id="dirtmineroutput">0.5</span>/s) 
+            			<button id="buydirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;">Buy x1 ($<span id="dirtminerprice">10</span>)</button>
+            			<button id="upgradecapdirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;">+Cap ($<span id="upgradecapdirtminerprice">50</span>)</button>
 	  				</p>
 	  			</div>
 			</div>
 
 		</div>
       	
-		<div id="row2" class="row">
-			<div id="oremenu">
+		<div id="row2" class="row justify-content-center">
+			<div id="upgrademenu" class="mx-2">
+	  			<div id="upgradetophalf">
+	  				<span>Upgrade</span>
+	  				<hr>
+	  			</div>
+
+	  			<div id="upgradebottomhalf">
+	  				<p>
+	  					
+	  				</p>
+	  			</div>
+			</div>
+
+			<div id="oremenu" class="mx-2">
 	  			<div id="oretophalf">
 	  				<span>Ores</span>
 	  				<hr>
@@ -105,6 +114,7 @@
     </div>
 
     <script src="./js/upgrade.js"></script>
+    <script src="./js/worker.js"></script>
     <script src="./js/player.js"></script>
     <script src="./js/data.js"></script>
     <script src="./js/quest.js"></script>
