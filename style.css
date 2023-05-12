@@ -6,9 +6,11 @@ body{
 }
 
 
+
 .hcenterwrap{
 
   text-align:center;
+  
 
 }
 
@@ -26,6 +28,15 @@ body{
 }
 
 #questmenu {
+  margin: 20px auto; 
+  width: 500px; 
+  height: 200px;
+  border: 1px solid lightgray;
+
+  float:left;
+}
+
+#miningstatmenu {
   margin: 20px auto; 
   width: 500px; 
   height: 200px;
@@ -75,6 +86,12 @@ body{
 
 }
 
+
+.leaderboard{
+
+  width:50%;
+
+}
 
 #minebackarrow{
 
@@ -136,6 +153,16 @@ height:50%;
 
 }
 
+#miningstattophalf{
+
+    font-size:1.5rem;
+    line-height: 0.8;
+    margin-top:10px;
+
+    height:20%;
+
+}
+
 #upgradetophalf{
 
     font-size:1.5rem;
@@ -144,6 +171,21 @@ height:50%;
 
     height:20%;
 
+}
+
+#upgradebottomlefthalf{
+
+    text-align: left;
+    width:50%;
+    float:left;
+
+}
+
+#upgradebottomrighthalf{
+
+    text-align: right;
+    width:50%;
+    float:left;
 }
 
 #workertophalf{
@@ -156,10 +198,19 @@ height:50%;
 
 }
 
-#workerbottomhalf{
+#workerbottomlefthalf{
 
     text-align: left;
+    width:50%;
+    float:left;
 
+}
+
+#workerbottomrighthalf{
+
+    text-align: right;
+    width:50%;
+    float:left;
 }
 
 .hide{

@@ -9,117 +9,26 @@
 </head>
 <body>
 
-	<nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
-	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-	      <span class="navbar-toggler-icon"></span>
-	    </button>
-	    <div class="collapse navbar-collapse position-relative" id="navbarNav">
-	      <ul class="navbar-nav mx-auto justify-content-between">
-	        <li class="nav-item">
-	          <a class="nav-link" href="#">Mine</a>
-	        </li>
-	        <li id="craftnav" class="nav-item" style="display:none">
-	          <a class="nav-link" href="#">Craft</a>
-	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="#">Stats</a>
-	        </li>
-	      </ul>
-	    </div>
-	</nav>
+	
 
-	<div id="homecontent" class="hcenterwrap">
-		<div id="row1" class="row justify-content-center">
-
-			<div id="questmenu" class="mx-2">
-	  			<div id="questtophalf">
-	  				<span>Quest</span>
-	  				<hr>
-	  			</div>
-
-	  			<div id="questbottomhalf">
-	  				
-	  			</div>
-			</div>
-
-			<div id="minemenu" class="mx-2">	
-	  			<div id="minetophalf">
-			  		<div class="ore-navigation">
-					   <span id="minebackarrow" class="prevent-select" onclick="changeOre('backward')">‹</span>
-					   <span id="orename">Dirt</span>
-					   <span id="mineforwardarrow" class="prevent-select" onclick="changeOre('forward')">›</span>
-				    </div>
-				    <hr>
-	      	 		<div id="countdown-display">5.0s</div>
-					<button id="swingpick" type="button" class="btn btn-light" onclick="startMining();">Swing pickaxe</button>
-	      		</div>
-	      		<div id="minebottomhalf">
-	      			<p>
-	      				<br>
-	      				Swing Power: <span id="swingincome">1</span>
-	      				<br>
-	      				Current Pickaxe: <span id="currentpickaxe"></span>
-	      			</p>
-
-	      		</div>
-			</div>
-
-			<div id="workermenu" class="mx-2">
-	  			<div id="workertophalf">
-	  				<span>Workers</span>
-	  				<hr>
-	  			</div>
-
-	  			<div id="workerbottomhalf">
-	  				<p>
-	  					<span id="dirtminercount">0</span>|<span id="dirtminercap">10</span> Dirt Miner (<span id="dirtmineroutput">0.5</span>/s) 
-            			<button id="buydirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;">Buy x1 ($<span id="dirtminerprice">10</span>)</button>
-            			<button id="upgradecapdirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;">+Cap ($<span id="upgradecapdirtminerprice">50</span>)</button>
-	  				</p>
-	  			</div>
-			</div>
-
-		</div>
-      	
-		<div id="row2" class="row justify-content-center">
-			<div id="upgrademenu" class="mx-2">
-	  			<div id="upgradetophalf">
-	  				<span>Upgrade</span>
-	  				<hr>
-	  			</div>
-
-	  			<div id="upgradebottomhalf">
-	  				<p>
-	  					
-	  				</p>
-	  			</div>
-			</div>
-
-			<div id="oremenu" class="mx-2">
-	  			<div id="oretophalf">
-	  				<span>Ores</span>
-	  				<hr>
-	  			</div>
-
-	  			<div id="orebottomhalf">
-	  				<p>
-	  					
-	  				</p>
-	  			</div>
-			</div>
-		</div>
-		
-
-
+	<div id="homecontent" class="hcenterwrap justify-content-center">
+		<div id="username-input" class="row justify-content-center">
+		    <form>
+		      <div class="form-group">
+		        <div class="container d-flex flex-column justify-content-center align-items-center">
+				  <h3>Enter your name:</h3>
+				  <input type="text" id="nameInput" class="form-control mx-auto" style="width: 25%;">
+				</div>
+		      </div>
+		      <button type="button" class="btn btn-primary" style="margin-top:0.5rem" onclick="setName();">Submit</button>
+		    </form>
+		  </div>
     </div>
 
-    <script src="./js/upgrade.js"></script>
-    <script src="./js/worker.js"></script>
     <script src="./js/player.js"></script>
     <script src="./js/data.js"></script>
-    <script src="./js/quest.js"></script>
 	<script src="./js/script.js"></script>
-	
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 </html>
