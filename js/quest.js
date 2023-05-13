@@ -25,20 +25,27 @@ let quests = [
     started: false,
     completed: false,
     unlocked: false,
+    unlockStoneMiner: function(){
+
+      stoneMinerAccess = 1;
+
+      updateWorkerMenu();
+
+    }
   },
   {
     name: "Stone Age",
-    flag: { Dirt: 25 },
-    requirements: { Stone: 10 },
-    rewards: { Cash: 75 },
+    flag: { Stone: 1 },
+    requirements: { Stone: 25 },
+    rewards: { Cash: 100 },
     started: false,
     completed: false,
     unlocked: false,
   },
   {
     name: "Iron Hunter",
-    flag: { Stone: 1 },
-    requirements: { Iron: 5 },
+    flag: { Stone: 25 },
+    requirements: { Iron: 25 },
     rewards: { Dirt: 250 },
     started: false,
     completed: false,
@@ -75,7 +82,7 @@ let quests = [
 {
   name: "The Navigator",
   flag: { Dirt: 50 },
-  requirements: { Cash: 50 },
+  requirements: { Dirt: 75 },
   rewards: { Map: 1 },
   started: false,
   completed: false,
@@ -85,10 +92,32 @@ let quests = [
       document.getElementById("mineforwardarrow").style.visibility = "visible";
       return;
     }
+    document.getElementById("mineforwardarrow").style.visibility = "visible";
     document.getElementById("minebackarrow").style.visibility = "visible";
     
   }
-}
+},
+
+{
+  name: "The Wizard",
+  flag: { Cash: 75 },
+  requirements: { Stone: 1 },
+  rewards: { Key: 1 },
+  started: false,
+  completed: false,
+  unlocked: false,
+  openTower: function() {
+    
+    towerAccess = 1;
+    document.getElementById("towermenu").style.visibility = "visible";
+
+
+
+    
+  }
+},
+
+
 
 
 ];

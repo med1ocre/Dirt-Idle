@@ -10,9 +10,7 @@
 <body>
 
 	<nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
-	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-	      <span class="navbar-toggler-icon"></span>
-	    </button>
+		<span id="playercurrency" class="navbar-text"><h4>$100</h4></span>
 	    <div class="collapse navbar-collapse position-relative" id="navbarNav">
 	      <ul class="navbar-nav mx-auto justify-content-between">
 	        <li class="nav-item">
@@ -76,14 +74,22 @@
 	  			<div id="workerbottomlefthalf">
 	  				<p>
 	  					<span id="dirtminercount">0</span>|<span id="dirtminercap">10</span> Dirt Miner (<span id="dirtmineroutput">0.5</span>/s) 
+	  					<br>
+	  					<div class="stoneminer"><span id="stoneminercount">0</span>|<span id="stoneminercap">10</span> Stone Miner (<span id="stonemineroutput">0.5</span>/s)</div>
 	  				</p>
 	  			</div>
 
 	  			<div id="workerbottomrighthalf">
 	  				<p>
-            			<button id="upgradecapdirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;">+Cap ($<span id="upgradecapdirtminerprice">50</span>)</button>
+            			<button id="upgradecapdirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyDirtMinerCap();">+Cap ($<span id="upgradecapdirtminerprice">50</span>)</button>
 
-            			<button id="buydirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;">Buy x1 ($<span id="dirtminerprice">10</span>)</button>
+            			<button id="buydirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;">Buy x1 ($<span id="dirtminerprice">10</span>)</button>
+            			<br>
+            			<div class="stoneminer">
+	            			<button id="upgradecapstoneminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyStoneMinerCap();">+Cap ($<span id="upgradecapstoneminerprice">50.00</span>)</button>
+
+	            			<button id="buystoneminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;">Buy x1 ($<span id="stoneminerprice">10</span>)</button>
+            			</div>
             			
 	  				</p>
 	  			</div>
@@ -129,7 +135,29 @@
 	  			</div>
 			</div>
 		</div>
-		
+
+		<div id="row3" class="row justify-content-center">
+			<div id="towermenu" class="mx-2" style="visibility: ;">
+	  			<div id="upgradetophalf">
+	  				<span>Tower</span>
+	  				<hr>
+	  			</div>
+
+	  			<div id="towerbottomlefthalf">
+	  				<p>
+	  					50x Dirt > 1 Stone
+	  				</p>
+	  			</div>
+
+	  			<div id="towerbottomrighthalf">
+	  				<p>
+            			
+            			<button id="converttoonestone" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;" onclick="convertDirt('one')">Convert x1</button>
+            			<button id="converttomaxstone" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;" onclick="convertDirt('max')">Convert Max</button>
+            			
+	  				</p>
+	  			</div>
+			</div>
 
 
     </div>

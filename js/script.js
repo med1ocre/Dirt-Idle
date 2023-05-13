@@ -1,18 +1,43 @@
 window.onload = function() {
   loadGame();
 
+
+
   if (window.location.pathname.includes("/main.html")) {
   setInterval(function(){displayQuests();},1000);
+
+  // Retrieve the interval ID from localStorage
+  const savedInterval1 = localStorage.getItem('dirtMinerInterval');
+  const savedInterval2 = localStorage.getItem('stoneMinerInterval');
+
+  // If the saved interval exists, start the interval again
+  if (savedInterval1) {
+      dirtMinerInterval = setInterval(function() {
+          Inventory.Dirt += (DirtMiner.Output / 2) * DirtMiner.Count;
+          showInventory();
+      }, 1000);
+  }
+  if (savedInterval2) {
+      stoneMinerInterval = setInterval(function() {
+          Inventory.Stone += (StoneMiner.Output / 2) * StoneMiner.Count;
+          showInventory();
+      }, 1000);
+  }
+
 
   showInventory();
   updatePickaxeUI();
   displayQuests();
   updateUpgradeUI();
   updateWorkerMenu();
+  updateCash();
 
   if(Inventory.Map == 1){
     document.getElementById("minebackarrow").style.visibility = "visible";
     document.getElementById("mineforwardarrow").style.visibility = "visible";
+  }
+   if(towerAccess == 1){
+    document.getElementById("towermenu").style.visibility = "visible";
   }
   }
 
@@ -21,6 +46,20 @@ window.onload = function() {
   }
 
 };
+
+function formatNumberLetter(num) {
+  if (num >= 1000000000000) {
+    return (num / 1000000000000).toFixed(1) + 't';
+  } else if (num >= 1000000000) {
+    return (num / 1000000000).toFixed(1) + 'b';
+  } else if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'm';
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'k';
+  } else {
+    return num;
+  }
+}
 
 
 function toRoman(num) {
@@ -55,6 +94,9 @@ function toRoman(num) {
 
 //Setting player name at start
 function setName(){
+  if(nameInput.value == ''){
+        return
+      }
   playerName = document.getElementById("nameInput").value;
   console.log(`Player name set to ${playerName}`);
   saveGame();
@@ -71,7 +113,10 @@ function saveGame() {
     currentPickaxe: currentPickaxe,
     Stat: Stat,
     quests: quests,
-    DirtMiner: DirtMiner
+    DirtMiner: DirtMiner,
+    towerAccess: towerAccess,
+    StoneMiner: StoneMiner,
+    stoneMinerAccess: stoneMinerAccess
   };
 
   // Save the gameSave object to localStorage
@@ -93,6 +138,9 @@ function loadGame() {
     activeQuests = savedData.activeQuests;
     quests = savedData.quests;
     DirtMiner = savedData.DirtMiner;
+    towerAccess = savedData.towerAccess;
+    StoneMiner = savedData.StoneMiner;
+    stoneMinerAccess = savedData.stoneMinerAccess;
   }
 }
 
@@ -201,33 +249,36 @@ function startMining() {
   }, 10);
 }
 
+function updateCash(){
+  playerCurrencyDisplay.innerHTML = '<h4>$' + formatNumberLetter(Inventory.Cash) + '</h4>';
+}
+
+const excludedItems = ['Cash', 'Key', 'Map'];
 
 function showInventory() {
   let inventoryList = '';
   let totalValue = 0;
 
   for (const [itemName, itemQuantity] of Object.entries(Inventory)) {
-    if (itemQuantity > 0) {
-      if (itemName !== 'Map') { // exclude the Map item from being added to the inventory list
-        const itemData = oreData.find(item => item.name === itemName);
-        if (itemData) {
-          const value = (itemQuantity * itemData.value);
-          inventoryList += `<div style="display:flex;align-items:center;justify-content:space-between;">`;
-          inventoryList += `<div>${itemQuantity.toFixed(1)}x ${itemName} ($${value.toFixed(2)})</div>`;
-          inventoryList += `<div style="display:flex;align-items:center;">`;
-          inventoryList += `<input type="number" min="1" max="${itemQuantity}" step="1" value="${itemQuantity}" id="${itemName}-sell-qty" style="width: 50px; font-size:11px;margin-right:5px">`;
-          inventoryList += `<button class="btn btn-sm btn-warning sell-btn" data-ore="${itemName}" style="margin-right:5px">Sell</button>`;
-          inventoryList += `<button class="btn btn-sm btn-danger sell-all-btn" data-ore="${itemName}">Sell All</button>`;
-          inventoryList += `</div></div>`;
-          totalValue += parseFloat(value.toFixed(2));
-        } else if (itemName !== 'Cash') {
-          inventoryList += `${itemQuantity}x ${itemName}<br>`;
-        }
+    if (itemQuantity > 0 && !excludedItems.includes(itemName)) {
+      const itemData = oreData.find(item => item.name === itemName);
+      if (itemData) {
+        const value = (itemQuantity * itemData.value);
+        inventoryList += `<div style="display:flex;align-items:center;justify-content:space-between;">`;
+        inventoryList += `<div>${formatNumberLetter(itemQuantity.toFixed(1))} ${itemName} ($${formatNumberLetter(value.toFixed(2))})</div>`;
+        inventoryList += `<div style="display:flex;align-items:center;">`;
+        inventoryList += `<input type="number" min="1" max="${itemQuantity}" step="1" id="${itemName}-sell-qty" style="width: 50px; font-size:11px;margin-right:5px">`;
+        inventoryList += `<button class="btn btn-sm btn-warning sell-btn" data-ore="${itemName}" style="margin-right:5px">Sell</button>`;
+        inventoryList += `<button class="btn btn-sm btn-danger sell-all-btn" data-ore="${itemName}">Sell All</button>`;
+        inventoryList += `</div></div>`;
+        totalValue += parseFloat(value.toFixed(2));
+      } else {
+        inventoryList += `${itemQuantity}x ${itemName}<br>`;
       }
     }
   }
 
-  inventoryList += `Total value: $${totalValue.toFixed(2)}`;
+  inventoryList += `Total value: $${formatNumberLetter(totalValue.toFixed(2))}`;
 
   document.getElementById('orebottomhalf').innerHTML = inventoryList;
 
@@ -246,6 +297,7 @@ function showInventory() {
         Inventory.Cash += qty * value;
         Stat.totalCashCollected += qty * value;
         Inventory[itemName] -= qty;
+        updateCash();
       }
       showInventory();
     });
@@ -264,11 +316,13 @@ function showInventory() {
         Inventory.Cash += Inventory[itemName] * value;
         Stat.totalCashCollected += Inventory[itemName] * value;
         Inventory[itemName] = 0;
+        updateCash();
       }
       showInventory();
     });
   });
 }
+
 
 
 function updateUpgradeUI() {
@@ -348,9 +402,34 @@ function upgradePickaxe() {
 }
 
 
+//tower stuff
 
 
-//QUEST STUFF!
+function convertDirt(amount) {
+  if (Inventory.Dirt < 50) {
+    return;
+  }
+
+  let numDirtToConvert;
+  if (amount === 'one') {
+    numDirtToConvert = 50;
+  } else if (amount === 'max') {
+    numDirtToConvert = Math.floor(Inventory.Dirt / 50) * 50;
+  }
+
+  if (numDirtToConvert) {
+    const numStoneToAdd = Math.floor(numDirtToConvert / 50);
+    Inventory.Stone += numStoneToAdd;
+    Inventory.Dirt -= numDirtToConvert;
+  }
+
+  showInventory();
+}
+
+
+
+//quest stuff
+
 function displayQuests() {
   const questBottomHalf = document.getElementById("questbottomhalf");
   questBottomHalf.innerHTML = "";
@@ -365,11 +444,15 @@ function displayQuests() {
     ) {
       const { name, requirements, rewards, started } = quest;
 
-      const questText = `${name} | ${Object.entries(requirements)
-        .map(([key, value]) =>
-          `${value} ${key.replace("currentPickaxe", "")}`
-        )
-        .join(", ")} | ${Object.entries(rewards)
+      const questText = `${name} | ${
+        Object.entries(requirements).length > 0
+          ? Object.entries(requirements)
+              .map(([key, value]) =>
+                `${value} ${key.replace("currentPickaxe", "")}`
+              )
+              .join(", ")
+          : "No requirements"
+      } | ${Object.entries(rewards)
         .map(([key, value]) => `${value} ${key}`)
         .join(", ")}&nbsp;`;
 
@@ -394,21 +477,19 @@ function displayQuests() {
       } else if (
         started &&
         Object.entries(requirements).every(
-          ([key, value]) => Inventory[key] >= value
+          ([key, value]) => {
+            if (key === "currentPickaxe") {
+              return currentPickaxe === value;
+            } else {
+              return Inventory[key] >= value;
+            }
+          }
         )
       ) {
         questButton.innerText = "Turn In!";
         questButton.disabled = false;
         questButton.classList.add("btn", "btn-success");
         questButton.addEventListener("click", () => {
-          Object.entries(requirements).every(([key, value]) => {
-            if (key === "currentPickaxe") {
-              return currentPickaxe === value;
-            } else {
-              return Inventory[key] >= value;
-            }
-          });
-
           Object.entries(requirements).forEach(([key, value]) => {
             Inventory[key] -= value;
           });
@@ -422,10 +503,15 @@ function displayQuests() {
           }
           if (quest.name === "The Navigator") {
             quest.activateMap();
+          } else if (quest.name === "The Wizard") {
+            quest.openTower();
+          }else if(quest.name === "Time to Upgrade"){
+            quest.unlockStoneMiner();
           }
           completedQuests.push(quest);
           displayQuests();
           showInventory();
+          updateCash()
           saveGame();
         });
       } else if (started) {
@@ -439,17 +525,10 @@ function displayQuests() {
 
       questElement.appendChild(questButton);
 
-      // Filter out completed quests from the list
+      // Filter out completed quests from the
       if (!completedQuests.includes(quest)) {
         questBottomHalf.appendChild(questElement);
       }
     }
   });
 }
-
-
-
-
-
-
-

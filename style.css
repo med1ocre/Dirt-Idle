@@ -14,6 +14,12 @@ body{
 
 }
 
+#playercurrency {
+  position: absolute;
+  left: 0;
+  margin-left: 10px; /* optional margin to adjust the distance from the left edge */
+}
+
 
 .w50{
 
@@ -32,6 +38,16 @@ body{
   width: 500px; 
   height: 200px;
   border: 1px solid lightgray;
+
+  float:left;
+}
+
+#towermenu {
+  margin: 20px auto; 
+  width: 500px; 
+  height: 200px;
+  border: 1px solid lightgray;
+  visibility: hidden;
 
   float:left;
 }
@@ -182,6 +198,49 @@ height:50%;
 }
 
 #upgradebottomrighthalf{
+
+    text-align: right;
+    width:50%;
+    float:left;
+}
+
+#towertophalf{
+
+    font-size:1.5rem;
+    line-height: 0.8;
+    margin-top:10px;
+
+    height:20%;
+
+}
+
+#towerbottomlefthalf{
+
+    text-align: left;
+    width:50%;
+    float:left;
+
+}
+
+.stoneminer{
+
+  visibility: hidden;
+
+}
+
+#questbottomhalf {
+  overflow-y: scroll; /* Add a vertical scrollbar */
+  max-height: 140px; /* Set a maximum height for the div */
+}
+
+
+#workermenu p{
+
+  margin-bottom:0;
+
+}
+
+#towerbottomrighthalf{
 
     text-align: right;
     width:50%;

@@ -1,9 +1,9 @@
 const oreData = [
   { name: 'Dirt', requiredWeight: 1, value: 1 },
   { name: 'Stone', requiredWeight: 2, value: 5 },
-  { name: 'Iron Ore', requiredWeight: 3, value: 10 },
+  { name: 'Iron', requiredWeight: 3, value: 10 },
   { name: 'Coal', requiredWeight: 4, value: 20 },
-  { name: 'Gold Ore', requiredWeight: 5, value: 50 },
+  { name: 'Gold', requiredWeight: 5, value: 50 },
   { name: 'Diamond', requiredWeight: 6, value: 100 },
   { name: 'Emerald', requiredWeight: 7, value: 200 },
   { name: 'Ruby', requiredWeight: 8, value: 300 },
@@ -52,8 +52,20 @@ let totalCashElement = document.getElementById('totalCash');
 let totalQuestsElement = document.getElementById('totalQuests');
 let highestPickaxeElement = document.getElementById('highestPickaxe');
 let dirtMinerCapDisplay = document.getElementById('dirtminercap');
+let stoneMinerCapDisplay = document.getElementById('stoneminercap');
+let upgradeCapDirtMinerPrice = document.getElementById('upgradecapdirtminerprice');
+let upgradeCapStoneMinerPrice = document.getElementById('upgradecapstoneminerprice');
 let pickaxeTierDisplay = document.getElementById('pickaxetier');
 let upgradePickaxeButton = document.getElementById("upgradepickaxe");
 let dirtMinerEffTierDisplay = document.getElementById("dirtminerefftier");
 let upgradeDirtMinerEffButton = document.getElementById("upgradedirtminereff");
+let playerCurrencyDisplay = document.getElementById("playercurrency");
 
+let convertOneToStoneButton = document.getElementById("converttoonestone");
+let convertMaxToStoneButton = document.getElementById("converttomaxstone");
+
+
+let stoneminer = document.getElementsByClassName("stoneminer");
+
+
+upgradecapdirtminerprice

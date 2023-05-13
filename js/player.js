@@ -2,6 +2,7 @@ let playerName;
 
 let Inventory = {
   Map: 0,
+  Key: 0,
   Cash: 0,
   Dirt: 0,
   Stone: 0,
@@ -26,9 +27,9 @@ let Inventory = {
 };
 
 
-let dirtMinerCap = 10;
 
-
+let towerAccess = 0;
+let stoneMinerAccess = 0;
 
 let activeQuests = [];
 let completedQuests = [];
