@@ -76,6 +76,16 @@
 	  					<span id="dirtminercount">0</span>|<span id="dirtminercap">10</span> Dirt Miner (<span id="dirtmineroutput">0.5</span>/s) 
 	  					<br>
 	  					<div class="stoneminer"><span id="stoneminercount">0</span>|<span id="stoneminercap">10</span> Stone Miner (<span id="stonemineroutput">0.5</span>/s)</div>
+	  					<br>
+	  					<div class="coalminer"><span id="coalminercount">0</span>|<span id="coalminercap">10</span> Coal Miner (<span id="coalmineroutput">0.5</span>/s)</div>
+	  					<br>
+	  					<div class="ironminer"><span id="ironminercount">0</span>|<span id="ironminercap">10</span> Iron Miner (<span id="ironmineroutput">0.5</span>/s)</div>
+	  					<br>
+	  					<div class="goldminer"><span id="goldminercount">0</span>|<span id="goldminercap">10</span> Gold Miner (<span id="goldmineroutput">0.5</span>/s)</div>
+	  					<br>
+	  					<div class="diamondminer"><span id="diamondminercount">0</span>|<span id="diamondminercap">10</span> Diamond Miner (<span id="diamondmineroutput">0.5</span>/s)</div>
+	  					
+	  					
 	  				</p>
 	  			</div>
 
@@ -137,7 +147,7 @@
 		</div>
 
 		<div id="row3" class="row justify-content-center">
-			<div id="towermenu" class="mx-2" style="visibility: ;">
+			<div id="towermenu" class="mx-2">
 	  			<div id="upgradetophalf">
 	  				<span>Tower</span>
 	  				<hr>
@@ -150,6 +160,27 @@
 	  			</div>
 
 	  			<div id="towerbottomrighthalf">
+	  				<p>
+            			
+            			<button id="converttoonestone" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;" onclick="convertDirt('one')">Convert x1</button>
+            			<button id="converttomaxstone" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;" onclick="convertDirt('max')">Convert Max</button>
+            			
+	  				</p>
+	  			</div>
+			</div>
+			<div id="mapmenu" class="mx-2" style="visibility: hidden;">
+	  			<div id="maptophalf">
+	  				<span>Map</span>
+	  				<hr>
+	  			</div>
+
+	  			<div id="mapbottomlefthalf">
+	  				<p>
+	  					50x Dirt > 1 Stone
+	  				</p>
+	  			</div>
+
+	  			<div id="mapbottomrighthalf">
 	  				<p>
             			
             			<button id="converttoonestone" class="btn btn-success" style="padding:0 10px;width:auto;font-size:14px;" onclick="convertDirt('one')">Convert x1</button>

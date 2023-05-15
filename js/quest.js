@@ -81,19 +81,14 @@ let quests = [
 
 {
   name: "The Navigator",
-  flag: { Dirt: 50 },
+  flag: { Diamond: 1 },
   requirements: { Dirt: 75 },
   rewards: { Map: 1 },
   started: false,
   completed: false,
   unlocked: false,
   activateMap: function() {
-    if(currentOre == 'Dirt'){
-      document.getElementById("mineforwardarrow").style.visibility = "visible";
-      return;
-    }
-    document.getElementById("mineforwardarrow").style.visibility = "visible";
-    document.getElementById("minebackarrow").style.visibility = "visible";
+    //Fill this out when you get this part of the game
     
   }
 },
@@ -109,12 +104,14 @@ let quests = [
   openTower: function() {
     
     towerAccess = 1;
-    document.getElementById("towermenu").style.visibility = "visible";
+    document.getElementById("towermenu").style.display = "block";
 
 
 
     
   }
+
+
 },
 
 

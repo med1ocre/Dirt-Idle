@@ -5,7 +5,7 @@ let DirtMiner = {
     Output: 0.5,
     Eff: 1,
     EffCost: 50,
-    Cap: 10
+    Cap: 5
 }
 
 let StoneMiner = {
@@ -15,7 +15,7 @@ let StoneMiner = {
     Output: 0.5,
     Eff: 1,
     EffCost: 50,
-    Cap: 10
+    Cap: 5
 }
 
 let dirtMinerInterval;
@@ -24,7 +24,7 @@ function buyDirtMiner() {
     if (DirtMiner.Count < DirtMiner.Cap && Inventory.Cash >= DirtMiner.Price) {
         Inventory.Cash -= DirtMiner.Price;
         DirtMiner.Count++;
-        DirtMiner.Price *= 1.5;
+        DirtMiner.Price *= 2.2;
         updateWorkerMenu();
         updateCash();
         saveGame();
@@ -46,7 +46,7 @@ function buyDirtMinerCap() {
     if (Inventory.Cash >= DirtMiner.CapPrice) {
         Inventory.Cash -= DirtMiner.CapPrice;
         DirtMiner.Cap++;
-        DirtMiner.CapPrice *= 1.5;
+        DirtMiner.CapPrice *= 2.5;
         updateWorkerMenu();
         updateCash();
         saveGame();
@@ -59,7 +59,7 @@ function buyStoneMiner() {
     if (StoneMiner.Count < StoneMiner.Cap && Inventory.Cash >= StoneMiner.Price) {
         Inventory.Cash -= StoneMiner.Price;
         StoneMiner.Count++;
-        StoneMiner.Price *= 1.5;
+        StoneMiner.Price *= 2.5;
         updateWorkerMenu();
         updateCash();
         saveGame();
@@ -81,7 +81,7 @@ function buyStoneMinerCap() {
     if (Inventory.Cash >= StoneMiner.CapPrice) {
         Inventory.Cash -= StoneMiner.CapPrice;
         StoneMiner.Cap++;
-        StoneMiner.CapPrice *= 1.5;
+        StoneMiner.CapPrice *= 2.8;
         updateWorkerMenu();
         updateCash();
         saveGame();
@@ -90,7 +90,7 @@ function buyStoneMinerCap() {
 
 function buyDirtMinerEfficiency(){
 
-    if(Inventory.Cash < DirtMiner.EffCost){
+    if(Inventory.Cash < DirtMiner.EffCost || DirtMiner.Eff >= 5){
         console.log("you dont have enough cash")
         return;
     }
@@ -98,7 +98,7 @@ function buyDirtMinerEfficiency(){
     DirtMiner.Eff += 1;
     Inventory.Cash -= DirtMiner.EffCost;
 
-    DirtMiner.EffCost = DirtMiner.EffCost * 2;
+    DirtMiner.EffCost = DirtMiner.EffCost * 3;
     DirtMiner.Output = DirtMiner.Output * 2;
     updateCash();
     updateUpgradeUI();

@@ -30,6 +30,10 @@ let Inventory = {
 
 let towerAccess = 0;
 let stoneMinerAccess = 0;
+let coalMinerAccess = 0;
+let ironMinerAccess = 0;
+let goldMinerAccess = 0;
+let diamondMinerAccess = 0;
 
 let activeQuests = [];
 let completedQuests = [];

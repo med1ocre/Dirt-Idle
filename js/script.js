@@ -37,7 +37,7 @@ window.onload = function() {
     document.getElementById("mineforwardarrow").style.visibility = "visible";
   }
    if(towerAccess == 1){
-    document.getElementById("towermenu").style.visibility = "visible";
+    document.getElementById("towermenu").style.display = "block";
   }
   }
 
@@ -330,7 +330,7 @@ function updateUpgradeUI() {
   let nextPickaxePrice = getNextPickaxePrice();
 
   dirtMinerEffTierDisplay.innerHTML = toRoman(DirtMiner.Eff);
-  upgradeDirtMinerEffButton.innerHTML = "Upgrade ($" + DirtMiner.EffCost.toFixed(2) + ")";
+  upgradeDirtMinerEffButton.innerHTML = "Upgrade ($" + formatNumberLetter(DirtMiner.EffCost.toFixed(2)) + ")";
 
   if (nextPickaxePrice === null) {
     upgradePickaxeButton.innerText = "Upgrade (Maxed out)";
@@ -505,8 +505,10 @@ function displayQuests() {
             quest.activateMap();
           } else if (quest.name === "The Wizard") {
             quest.openTower();
+            towerAccess = 1;
           }else if(quest.name === "Time to Upgrade"){
             quest.unlockStoneMiner();
+            stoneMinerAccess = 1;
           }
           completedQuests.push(quest);
           displayQuests();

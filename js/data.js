@@ -1,8 +1,8 @@
 const oreData = [
   { name: 'Dirt', requiredWeight: 1, value: 1 },
   { name: 'Stone', requiredWeight: 2, value: 5 },
-  { name: 'Iron', requiredWeight: 3, value: 10 },
-  { name: 'Coal', requiredWeight: 4, value: 20 },
+  { name: 'Coal', requiredWeight: 3, value: 10 },
+  { name: 'Iron', requiredWeight: 4, value: 20 },
   { name: 'Gold', requiredWeight: 5, value: 50 },
   { name: 'Diamond', requiredWeight: 6, value: 100 },
   { name: 'Emerald', requiredWeight: 7, value: 200 },

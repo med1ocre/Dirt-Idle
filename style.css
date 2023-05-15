@@ -47,9 +47,44 @@ body{
   width: 500px; 
   height: 200px;
   border: 1px solid lightgray;
-  visibility: hidden;
+  display:none;
 
   float:left;
+}
+
+
+#mapmenu {
+  margin: 20px auto; 
+  width: 500px; 
+  height: 200px;
+  border: 1px solid lightgray;
+
+  float:left;
+}
+
+#maptophalf{
+
+    font-size:1.5rem;
+    line-height: 0.8;
+    margin-top:10px;
+
+    height:20%;
+
+}
+
+#mapbottomlefthalf{
+
+    text-align: left;
+    width:50%;
+    float:left;
+
+}
+
+#mapbottomrighthalf{
+
+    text-align: right;
+    width:50%;
+    float:left;
 }
 
 #miningstatmenu {
@@ -222,7 +257,49 @@ height:50%;
 
 }
 
+
+
+#upgradetophalf{
+
+    font-size:1.5rem;
+    line-height: 0.8;
+    margin-top:10px;
+
+    height:20%;
+
+}
+
+#upgradebottomlefthalf{
+
+    text-align: left;
+    width:50%;
+    float:left;
+
+}
+
 .stoneminer{
+
+  visibility: hidden;
+
+}
+
+.coalminer{
+
+  visibility: hidden;
+
+}
+
+.ironminer{
+
+  visibility: hidden;
+
+}
+.goldminer{
+
+  visibility: hidden;
+
+}
+.diamondminer{
 
   visibility: hidden;
 
