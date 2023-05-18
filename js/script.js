@@ -2,10 +2,6 @@ window.onload = function() {
   loadGame();
 
 
-
-  if (window.location.pathname.includes("/main.html")) {
-  setInterval(function(){displayQuests();},1000);
-
   // Retrieve the interval ID from localStorage
   const savedInterval1 = localStorage.getItem('minerInterval');
 
@@ -32,32 +28,34 @@ window.onload = function() {
     }, 1000);
   }
 
+  if (window.location.pathname.includes("/main.html")) {
+    setInterval(function(){displayQuests();},1000);
 
-  showInventory();
-  updatePickaxeUI();
-  displayQuests();
-  updateUpgradeUI();
-  updateWorkerMenu();
-  updateCash();
+    showInventory();
+    updatePickaxeUI();
+    displayQuests();
+    updateUpgradeUI();
+    updateWorkerMenu();
+    updateCash();
 
-  if(stoneMinerAccess == 1){
-    document.getElementById("mineforwardarrow").style.visibility = "visible";
-    if(currentOre != 'Dirt'){
-      document.getElementById("minebackarrow").style.visibility = "visible";
+    if(stoneMinerAccess == 1){
+      document.getElementById("mineforwardarrow").style.visibility = "visible";
+      if(currentOre != 'Dirt'){
+        document.getElementById("minebackarrow").style.visibility = "visible";
+      }
+
     }
-
-  }
-   if(towerAccess == 1){
-    document.getElementById("towermenu").style.visibility = "visible";
-  }
-  return;
+     if(towerAccess == 1){
+      document.getElementById("towermenu").style.visibility = "visible";
+    }
+    return;
   }
 
   if (window.location.pathname.includes("/stats.html")) {
     updateStatsUI();
   }
 
-};
+}
 
 function formatNumberLetter(num) {
   if(num >= 1000000000000000000000000000000000){
@@ -543,24 +541,29 @@ function displayQuests() {
             quest.openTower();
             towerAccess = 1;
           }else if(quest.name === "Time to Upgrade"){
-            quest.unlockStoneMiner();
             stoneMinerAccess = 1;
+
+            updateWorkerMenu();
           }
           else if(quest.name === "Coal Please"){
-            quest.unlockCoalMiner();
+            
             coalMinerAccess = 1;
+            updateWorkerMenu();
           }
           else if(quest.name === "We need Iron"){
-            quest.unlockIronMiner();
+            
             ironMinerAccess = 1;
+            updateWorkerMenu();
           }
           else if(quest.name === "Gold Rush"){
-            quest.unlockGoldMiner();
+            
             goldMinerAccess = 1;
+            updateWorkerMenu();
           }
           else if(quest.name === "Diamond Farm"){
-            quest.unlockDiamondMiner();
+           
             diamondMinerAccess = 1;
+            updateWorkerMenu();
           }
           completedQuests.push(quest);
           displayQuests();

@@ -10,7 +10,7 @@ let quests = [
   },
   {
     name: "More Dirt",
-    flag: { Dirt: 10, Cash: 15 },
+    flag: { Dirt: 5 },
     requirements: { Dirt: 25 },
     rewards: { Cash: 35 },
     started: false,
@@ -157,9 +157,7 @@ let quests = [
     towerAccess = 1;
     document.getElementById("towermenu").style.visibility = "visible";
 
-
-
-    
+ 
   }
 
 
