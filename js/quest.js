@@ -10,7 +10,7 @@ let quests = [
   },
   {
     name: "More Dirt",
-    flag: { Dirt: 10 },
+    flag: { Dirt: 10, Cash: 15 },
     requirements: { Dirt: 25 },
     rewards: { Cash: 35 },
     started: false,
@@ -21,7 +21,7 @@ let quests = [
     name: "Time to Upgrade",
     flag: { Dirt: 50 },
     requirements: { currentPickaxe: 'Stone Pickaxe' },
-    rewards: { Cash: 50 },
+    rewards: { "Stone Miner": 1 },
     started: false,
     completed: false,
     unlocked: false,
@@ -29,6 +29,66 @@ let quests = [
 
       stoneMinerAccess = 1;
 
+      updateWorkerMenu();
+
+    }
+  },
+  {
+    name: "Coal Please",
+    flag: { Stone: 50 },
+    requirements: { currentPickaxe: 'Bronze Pickaxe' },
+    rewards: { "Coal Miner": 1 },
+    started: false,
+    completed: false,
+    unlocked: false,
+    unlockCoalMiner: function(){
+
+      coalMinerAccess = 1;
+      updateWorkerMenu();
+
+    }
+  },
+  {
+    name: "We need Iron",
+    flag: { Coal: 50 },
+    requirements: { currentPickaxe: 'Iron Pickaxe' },
+    rewards: { "Iron Miner": 1 },
+    started: false,
+    completed: false,
+    unlocked: false,
+    unlockIronMiner: function(){
+
+      ironMinerAccess = 1;
+      updateWorkerMenu();
+
+    }
+  },
+  {
+    name: "Gold Rush",
+    flag: { Iron: 50 },
+    requirements: { currentPickaxe: 'Steel Pickaxe' },
+    rewards: { "Gold Miner": 1 },
+    started: false,
+    completed: false,
+    unlocked: false,
+    unlockGoldMiner: function(){
+
+      goldMinerAccess = 1;
+      updateWorkerMenu();
+
+    }
+  },
+  {
+    name: "Diamond Farm",
+    flag: { Iron: 50 },
+    requirements: { currentPickaxe: 'Silver Pickaxe' },
+    rewards: { "Diamond Miner": 1 },
+    started: false,
+    completed: false,
+    unlocked: false,
+    unlockDiamondMiner: function(){
+
+      diamondMinerAccess = 1;
       updateWorkerMenu();
 
     }
@@ -52,15 +112,6 @@ let quests = [
     unlocked: false,
 },
 {
-  name: "Gold Rush",
-  flag: { Coal: 1 },
-  requirements: { Gold: 10 },
-  rewards: { Cash: 1000 },
-  started: false,
-  completed: false,
-  unlocked: false,
-},
-{
   name: "Diamonds in the Rough",
   flag: { Gold: 15 },
   requirements: { Diamond: 1 },
@@ -72,7 +123,7 @@ let quests = [
 {
   name: "The Big Score",
   flag: { Coal: 50 },
-  requirements: { Gold: 1, Diamond: 1, Emerald: 1},
+  requirements: {Diamond: 1},
   rewards: { Cash: 1000 },
   started: false,
   completed: false,
@@ -104,7 +155,7 @@ let quests = [
   openTower: function() {
     
     towerAccess = 1;
-    document.getElementById("towermenu").style.display = "block";
+    document.getElementById("towermenu").style.visibility = "visible";
 
 
 

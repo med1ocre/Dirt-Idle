@@ -74,15 +74,10 @@
 	  			<div id="workerbottomlefthalf">
 	  				<p>
 	  					<span id="dirtminercount">0</span>|<span id="dirtminercap">10</span> Dirt Miner (<span id="dirtmineroutput">0.5</span>/s) 
-	  					<br>
 	  					<div class="stoneminer"><span id="stoneminercount">0</span>|<span id="stoneminercap">10</span> Stone Miner (<span id="stonemineroutput">0.5</span>/s)</div>
-	  					<br>
 	  					<div class="coalminer"><span id="coalminercount">0</span>|<span id="coalminercap">10</span> Coal Miner (<span id="coalmineroutput">0.5</span>/s)</div>
-	  					<br>
 	  					<div class="ironminer"><span id="ironminercount">0</span>|<span id="ironminercap">10</span> Iron Miner (<span id="ironmineroutput">0.5</span>/s)</div>
-	  					<br>
 	  					<div class="goldminer"><span id="goldminercount">0</span>|<span id="goldminercap">10</span> Gold Miner (<span id="goldmineroutput">0.5</span>/s)</div>
-	  					<br>
 	  					<div class="diamondminer"><span id="diamondminercount">0</span>|<span id="diamondminercap">10</span> Diamond Miner (<span id="diamondmineroutput">0.5</span>/s)</div>
 	  					
 	  					
@@ -91,14 +86,34 @@
 
 	  			<div id="workerbottomrighthalf">
 	  				<p>
-            			<button id="upgradecapdirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyDirtMinerCap();">+Cap ($<span id="upgradecapdirtminerprice">50</span>)</button>
+            			<button id="upgradecapdirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMinerCap(DirtMiner);">+Cap ($<span id="upgradecapdirtminerprice">50</span>)</button>
 
-            			<button id="buydirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;">Buy x1 ($<span id="dirtminerprice">10</span>)</button>
+            			<button id="buydirtminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMiner(DirtMiner)">Buy x1 ($<span id="dirtminerprice">10</span>)</button>
             			<br>
             			<div class="stoneminer">
-	            			<button id="upgradecapstoneminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyStoneMinerCap();">+Cap ($<span id="upgradecapstoneminerprice">50.00</span>)</button>
+	            			<button id="upgradecapstoneminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMinerCap(StoneMiner);">+Cap ($<span id="upgradecapstoneminerprice">50.00</span>)</button>
 
-	            			<button id="buystoneminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;">Buy x1 ($<span id="stoneminerprice">10</span>)</button>
+	            			<button id="buystoneminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMiner(StoneMiner)">Buy x1 ($<span id="stoneminerprice">10</span>)</button>
+            			</div>
+            			<div class="coalminer">
+	            			<button id="upgradecapcoalminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMinerCap(CoalMiner);">+Cap ($<span id="upgradecapcoalminerprice">50.00</span>)</button>
+
+	            			<button id="buycoalminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMiner(CoalMiner)">Buy x1 ($<span id="coalminerprice">10.00</span>)</button>
+            			</div>
+            			<div class="ironminer">
+	            			<button id="upgradecapironminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMinerCap(IronMiner);">+Cap ($<span id="upgradecapironminerprice">50.00</span>)</button>
+
+	            			<button id="buyironminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMiner(IronMiner)">Buy x1 ($<span id="ironminerprice">10.00</span>)</button>
+            			</div>
+            			<div class="goldminer">
+	            			<button id="upgradecapgoldminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMinerCap(GoldMiner);">+Cap ($<span id="upgradecapgoldminerprice">50.00</span>)</button>
+
+	            			<button id="buygoldminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMiner(GoldMiner)">Buy x1 ($<span id="goldminerprice">10.00</span>)</button>
+            			</div>
+            			<div class="diamondminer">
+	            			<button id="upgradecapdiamondminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMinerCap(DiamondMiner);">+Cap ($<span id="upgradecapdiamondminerprice">50.00</span>)</button>
+
+	            			<button id="buydiamondminer" class="btn btn-success" style="padding:0 10px;width:auto;font-size:12px;" onclick="buyMiner(DiamondMiner)">Buy x1 ($<span id="diamondminerprice">10.00</span>)</button>
             			</div>
             			
 	  				</p>
@@ -168,7 +183,7 @@
 	  				</p>
 	  			</div>
 			</div>
-			<div id="mapmenu" class="mx-2" style="visibility: hidden;">
+			<div id="mapmenu" class="mx-2" style="display: none;">
 	  			<div id="maptophalf">
 	  				<span>Map</span>
 	  				<hr>
@@ -194,8 +209,9 @@
     </div>
 
     <script src="./js/upgrade.js"></script>
-    <script src="./js/worker.js"></script>
+    
     <script src="./js/player.js"></script>
+    <script src="./js/worker.js"></script>
     <script src="./js/data.js"></script>
     <script src="./js/quest.js"></script>
     <script src="./js/leaderboard.js"></script>

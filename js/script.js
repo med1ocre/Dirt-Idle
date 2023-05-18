@@ -7,21 +7,29 @@ window.onload = function() {
   setInterval(function(){displayQuests();},1000);
 
   // Retrieve the interval ID from localStorage
-  const savedInterval1 = localStorage.getItem('dirtMinerInterval');
-  const savedInterval2 = localStorage.getItem('stoneMinerInterval');
+  const savedInterval1 = localStorage.getItem('minerInterval');
 
   // If the saved interval exists, start the interval again
   if (savedInterval1) {
-      dirtMinerInterval = setInterval(function() {
-          Inventory.Dirt += (DirtMiner.Output / 2) * DirtMiner.Count;
-          showInventory();
-      }, 1000);
-  }
-  if (savedInterval2) {
-      stoneMinerInterval = setInterval(function() {
+      minerInterval = setInterval(function() {
+        Inventory.Dirt += (DirtMiner.Output / 2) * DirtMiner.Count;
+        if (StoneMiner.Count > 0) {
           Inventory.Stone += (StoneMiner.Output / 2) * StoneMiner.Count;
-          showInventory();
-      }, 1000);
+        }
+        if (CoalMiner.Count > 0) {
+          Inventory.Coal += (CoalMiner.Output / 2) * CoalMiner.Count;
+        }
+        if (IronMiner.Count > 0) {
+          Inventory.Iron += (IronMiner.Output / 2) * IronMiner.Count;
+        }
+        if (GoldMiner.Count > 0) {
+          Inventory.Gold += (GoldMiner.Output / 2) * GoldMiner.Count;
+        }
+        if (DiamondMiner.Count > 0) {
+          Inventory.Diamond += (DiamondMiner.Output / 2) * DiamondMiner.Count;
+        }
+        showInventory();
+    }, 1000);
   }
 
 
@@ -32,13 +40,17 @@ window.onload = function() {
   updateWorkerMenu();
   updateCash();
 
-  if(Inventory.Map == 1){
-    document.getElementById("minebackarrow").style.visibility = "visible";
+  if(stoneMinerAccess == 1){
     document.getElementById("mineforwardarrow").style.visibility = "visible";
+    if(currentOre != 'Dirt'){
+      document.getElementById("minebackarrow").style.visibility = "visible";
+    }
+
   }
    if(towerAccess == 1){
-    document.getElementById("towermenu").style.display = "block";
+    document.getElementById("towermenu").style.visibility = "visible";
   }
+  return;
   }
 
   if (window.location.pathname.includes("/stats.html")) {
@@ -48,7 +60,21 @@ window.onload = function() {
 };
 
 function formatNumberLetter(num) {
-  if (num >= 1000000000000) {
+  if(num >= 1000000000000000000000000000000000){
+    return (num / 1000000000000000000000000000000000).toFixed(1) + 'd';
+  }  else if(num >= 1000000000000000000000000000000) {
+    return (num / 1000000000000000000000000000000).toFixed(1) + 'n';
+  } else if(num >= 1000000000000000000000000000) {
+    return (num / 1000000000000000000000000000).toFixed(1) + 'o';
+  } else if(num >= 1000000000000000000000000) {
+    return (num / 1000000000000000000000000).toFixed(1) + 'S';
+  }  else if(num >= 1000000000000000000000) {
+    return (num / 1000000000000000000000).toFixed(1) + 's';
+  } else if(num >= 1000000000000000000) {
+    return (num / 1000000000000000000).toFixed(1) + 'Q';
+  } else if (num >= 1000000000000000) {
+    return (num / 1000000000000000).toFixed(1) + 'q';
+  } else if (num >= 1000000000000) {
     return (num / 1000000000000).toFixed(1) + 't';
   } else if (num >= 1000000000) {
     return (num / 1000000000).toFixed(1) + 'b';
@@ -116,7 +142,15 @@ function saveGame() {
     DirtMiner: DirtMiner,
     towerAccess: towerAccess,
     StoneMiner: StoneMiner,
-    stoneMinerAccess: stoneMinerAccess
+    CoalMiner: CoalMiner,
+    IronMiner: IronMiner,
+    GoldMiner: GoldMiner,
+    DiamondMiner: DiamondMiner,
+    stoneMinerAccess: stoneMinerAccess,
+    coalMinerAccess: coalMinerAccess,
+    ironMinerAccess: ironMinerAccess,
+    goldMinerAccess: goldMinerAccess,
+    diamondMinerAccess: diamondMinerAccess,
   };
 
   // Save the gameSave object to localStorage
@@ -140,7 +174,16 @@ function loadGame() {
     DirtMiner = savedData.DirtMiner;
     towerAccess = savedData.towerAccess;
     StoneMiner = savedData.StoneMiner;
+    CoalMiner = savedData.CoalMiner;
+    IronMiner = savedData.IronMiner;
+    GoldMiner = savedData.GoldMiner;
+    DiamondMiner = savedData.DiamondMiner;
     stoneMinerAccess = savedData.stoneMinerAccess;
+    coalMinerAccess = savedData.coalMinerAccess;
+    ironMinerAccess = savedData.ironMinerAccess;
+    goldMinerAccess = savedData.goldMinerAccess;
+    diamondMinerAccess = savedData.diamondMinerAccess;
+    
   }
 }
 
@@ -250,7 +293,7 @@ function startMining() {
 }
 
 function updateCash(){
-  playerCurrencyDisplay.innerHTML = '<h4>$' + formatNumberLetter(Inventory.Cash) + '</h4>';
+  playerCurrencyDisplay.innerHTML = '<h4>$' + formatNumberLetter(Inventory.Cash.toFixed(2)) + '</h4>';
 }
 
 const excludedItems = ['Cash', 'Key', 'Map'];
@@ -436,11 +479,8 @@ function displayQuests() {
 
   quests.forEach((quest) => {
     if (
-      !quest.completed &&
-      (quest.unlocked ||
-        Object.entries(quest.flag).some(
-          ([key, value]) => Inventory[key] >= value
-        ))
+      (quest.unlocked || Object.entries(quest.flag).every(([key, value]) => Inventory[key] >= value)) &&
+      (!quest.completed || quest.unlocked)
     ) {
       const { name, requirements, rewards, started } = quest;
 
@@ -474,18 +514,14 @@ function displayQuests() {
           questButton.classList.add("btn-warning");
           activeQuests.push(quest);
         });
-      } else if (
-        started &&
-        Object.entries(requirements).every(
-          ([key, value]) => {
-            if (key === "currentPickaxe") {
-              return currentPickaxe === value;
-            } else {
-              return Inventory[key] >= value;
-            }
+      } else if (started && Object.entries(requirements).every(([key, value]) => {
+          if (key === "currentPickaxe") {
+            const pickaxeTiers = ["Bronze Pickaxe", "Iron Pickaxe", "Steel Pickaxe", "Silver Pickaxe"];
+            return pickaxeTiers.indexOf(currentPickaxe) >= pickaxeTiers.indexOf(value);
+          } else {
+            return Inventory[key] >= value;
           }
-        )
-      ) {
+        })) {
         questButton.innerText = "Turn In!";
         questButton.disabled = false;
         questButton.classList.add("btn", "btn-success");
@@ -509,6 +545,22 @@ function displayQuests() {
           }else if(quest.name === "Time to Upgrade"){
             quest.unlockStoneMiner();
             stoneMinerAccess = 1;
+          }
+          else if(quest.name === "Coal Please"){
+            quest.unlockCoalMiner();
+            coalMinerAccess = 1;
+          }
+          else if(quest.name === "We need Iron"){
+            quest.unlockIronMiner();
+            ironMinerAccess = 1;
+          }
+          else if(quest.name === "Gold Rush"){
+            quest.unlockGoldMiner();
+            goldMinerAccess = 1;
+          }
+          else if(quest.name === "Diamond Farm"){
+            quest.unlockDiamondMiner();
+            diamondMinerAccess = 1;
           }
           completedQuests.push(quest);
           displayQuests();

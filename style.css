@@ -47,7 +47,7 @@ body{
   width: 500px; 
   height: 200px;
   border: 1px solid lightgray;
-  display:none;
+  visibility:hidden;
 
   float:left;
 }
@@ -307,7 +307,8 @@ height:50%;
 
 #questbottomhalf {
   overflow-y: scroll; /* Add a vertical scrollbar */
-  max-height: 140px; /* Set a maximum height for the div */
+  max-height: 145px; /* Set a maximum height for the div */
+  min-height: 145px;
 }
 
 

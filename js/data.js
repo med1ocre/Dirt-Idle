@@ -24,9 +24,9 @@ const oreData = [
 const pickaxeData = [
   { name: 'Wooden Pickaxe', weight: 1, power: 1 },
   { name: 'Stone Pickaxe', weight: 2, power: 2, price: { Dirt: 100 } },
-  { name: 'Iron Pickaxe', weight: 3, power: 5, price: { Stone: 100 } },
-  { name: 'Steel Pickaxe', weight: 4, power: 10, price: { Iron: 100 } },
-  { name: 'Bronze Pickaxe', weight: 5, power: 15, price: { Coal: 100 } },
+  { name: 'Bronze Pickaxe', weight: 3, power: 5, price: { Stone: 100 } },
+  { name: 'Iron Pickaxe', weight: 4, power: 10, price: { Coal: 100 } },
+  { name: 'Steel Pickaxe', weight: 5, power: 15, price: { Iron: 100 } },
   { name: 'Silver Pickaxe', weight: 6, power: 20, price: { Gold: 100 } },
   { name: 'Gold Pickaxe', weight: 7, power: 30, price: { Diamond: 100 } },
   { name: 'Platinum Pickaxe', weight: 8, power: 40, price: { Emerald: 100 } },
@@ -53,8 +53,16 @@ let totalQuestsElement = document.getElementById('totalQuests');
 let highestPickaxeElement = document.getElementById('highestPickaxe');
 let dirtMinerCapDisplay = document.getElementById('dirtminercap');
 let stoneMinerCapDisplay = document.getElementById('stoneminercap');
+let coalMinerCapDisplay = document.getElementById('coalminercap');
+let ironMinerCapDisplay = document.getElementById('ironminercap');
+let goldMinerCapDisplay = document.getElementById('goldminercap');
+let diamondMinerCapDisplay = document.getElementById('diamondminercap');
 let upgradeCapDirtMinerPrice = document.getElementById('upgradecapdirtminerprice');
+let upgradeCapCoalMinerPrice = document.getElementById("upgradecapcoalminerprice")
 let upgradeCapStoneMinerPrice = document.getElementById('upgradecapstoneminerprice');
+let upgradeCapIronMinerPrice = document.getElementById('upgradecapironminerprice');
+let upgradeCapGoldMinerPrice = document.getElementById('upgradecapgoldminerprice');
+let upgradeCapDiamondMinerPrice = document.getElementById('upgradecapdiamondminerprice');
 let pickaxeTierDisplay = document.getElementById('pickaxetier');
 let upgradePickaxeButton = document.getElementById("upgradepickaxe");
 let dirtMinerEffTierDisplay = document.getElementById("dirtminerefftier");
@@ -66,6 +74,8 @@ let convertMaxToStoneButton = document.getElementById("converttomaxstone");
 
 
 let stoneminer = document.getElementsByClassName("stoneminer");
+let coalminer = document.getElementsByClassName("coalminer");
+let ironminer = document.getElementsByClassName("ironminer");
+let goldminer = document.getElementsByClassName("goldminer");
+let diamondminer = document.getElementsByClassName("diamondminer");
 
-
-upgradecapdirtminerprice
